@@ -1,0 +1,47 @@
+# Package sources
+
+[[tool.pdm.source]]
+name = "chipflow-amaranth-vexriscv"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+
+# Project metadata
+
+[project]
+name = "chipflow-test-socs"
+version = "0.0.0"
+description = "ChipFlow test designs"
+authors = [
+    {name = "Robert Taylor", email = "rob.taylor@chipflow.io>" },
+    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io>" },
+    {name = "Serge Rabyking", email = "serge.rabyking@chipflow.io>" },
+]
+license = {file = "LICENSE.md"}
+
+requires-python = "~=3.8"
+dependencies = [
+  "chipflow-lib @ git+https://gitlab.com/ChipFlow/chipflow-lib.git@main",
+  "ziglang==0.11.0.dev3747",
+  "pyelftools~=0.29",
+]
+
+# Build system configuration
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+# Development workflow configuration
+
+[tool.pdm.dev-dependencies]
+test = [
+  "pytest~=7.2.0",
+]
+lint = [
+  "pycodestyle~=2.9.1",
+  "autopep8~=2.0.0",
+]
+
+[tool.pdm.scripts]
+_.env_file = ".env.toolchain"
+test.cmd = "pytest"
+lint.cmd = "pycodestyle --config=./.pycodestyle my_design/ tests/"

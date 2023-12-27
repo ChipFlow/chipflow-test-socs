@@ -1,0 +1,51 @@
+[chipflow.steps]
+sim = "design.steps.sim:MySimStep"
+board = "design.steps.board:MyBoardStep"
+silicon = "design.steps.silicon:MySiliconStep"
+software = "design.steps.software:MySoftwareStep"
+
+[chipflow.silicon]
+process = "sky130"
+pad_ring = "caravel"
+
+[chipflow.silicon.pads]
+sys_clk   = { type = "clk", loc = "0" }
+sys_rstn  = { type = "i",   loc = "1" }
+data_0    = { type = "o",   loc = "2" }
+data_1    = { type = "o",   loc = "3" }
+data_2    = { type = "o",   loc = "4" }
+data_3    = { type = "o",   loc = "5" }
+data_4    = { type = "o",   loc = "6" }
+data_5    = { type = "o",   loc = "7" }
+data_6    = { type = "o",   loc = "8" }
+data_7    = { type = "o",   loc = "9" }
+data_8    = { type = "o",   loc = "10" }
+data_9    = { type = "o",   loc = "11" }
+data_10   = { type = "o",   loc = "12" }
+data_11   = { type = "o",   loc = "13" }
+data_12   = { type = "o",   loc = "14" }
+data_13   = { type = "o",   loc = "15" }
+data_14   = { type = "o",   loc = "16" }
+data_15   = { type = "o",   loc = "17" }
+
+addr_0    = { type = "i",   loc = "18" }
+addr_1    = { type = "i",   loc = "19" }
+addr_2    = { type = "i",   loc = "20" }
+addr_3    = { type = "i",   loc = "21" }
+addr_4    = { type = "i",   loc = "22" }
+addr_5    = { type = "i",   loc = "23" }
+addr_6    = { type = "i",   loc = "24" }
+addr_7    = { type = "i",   loc = "25" }
+addr_8    = { type = "i",   loc = "26" }
+addr_9    = { type = "i",   loc = "27" }
+addr_10   = { type = "i",   loc = "28" }
+addr_11   = { type = "i",   loc = "29" }
+addr_12   = { type = "i",   loc = "30" }
+addr_13   = { type = "i",   loc = "31" }
+addr_14   = { type = "i",   loc = "32" }
+addr_15   = { type = "i",   loc = "33" }
+#jtag_tck  = { type = "i",   loc = "33" }
+#jtag_tms  = { type = "i",   loc = "34" }
+#jtag_tdi  = { type = "i",   loc = "35" }
+#jtag_tdo  = { type = "o",   loc = "36" }
+
