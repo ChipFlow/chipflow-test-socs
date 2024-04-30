@@ -1,14 +1,4 @@
 # chipflow-test-socs
 
 
-## Getting started
-
-```
-make init
-```
-
-## Build
-
-```
-make <design name>
-```
+This has been [moved to GitHub](https://github.com/ChipFlow/chipflow-test-socs).
