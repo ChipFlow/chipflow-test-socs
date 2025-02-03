@@ -1,6 +1,11 @@
+import os
+import json
 from test_socs_common.silicon import *
 from chipflow_lib.steps.silicon import SiliconStep
 from ..design import MySoC
+
+
+BUILD_DIR = os.path.join(os.environ["CHIPFLOW_ROOT"], "build")
 
 
 _pga144_pinout = {
@@ -27,4 +32,7 @@ class MySiliconStep(SiliconStep):
         super().__init__(config)
 
     def prepare(self):
+        os.makedirs(BUILD_DIR, exist_ok=True)
+        with open(os.path.join(BUILD_DIR, "config.json"), "wt") as f:
+            json.dump({"silicon": self.silicon_config}, f, indent=2)
         return self.platform.build(ChipflowTop(MySoC, _pga144_pinout), name=MySoC.design_name)
