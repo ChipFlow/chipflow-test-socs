@@ -6,7 +6,7 @@ from math import ceil, log2
 import random
 
 
-__all__ = ["ROMSignature", "SRAM"]
+__all__ = ["SRAMSignature", "SRAM"]
 
 SRAMSignature = wiring.Signature({
     "addr": In(12),
