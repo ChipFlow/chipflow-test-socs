@@ -11,6 +11,7 @@ CounterSignature = wiring.Signature({
     "count": Out(8)
 })
 
+
 class UpCounter(wiring.Component):
     design_name = "upcounter"
 
@@ -35,5 +36,6 @@ class UpCounter(wiring.Component):
                 m.d.sync += pins.count.eq(pins.count + 1)
 
         return m
+
 
 MySoC = UpCounter

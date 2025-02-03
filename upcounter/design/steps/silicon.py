@@ -1,7 +1,3 @@
-import os
-import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))
-
 from test_socs_common.silicon import *
 from chipflow_lib.steps.silicon import SiliconStep
 from ..design import MySoC

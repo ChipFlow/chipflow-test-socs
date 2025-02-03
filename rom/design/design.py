@@ -42,4 +42,5 @@ class ROM(wiring.Component):
 
         return m
 
+
 MySoC = ROM

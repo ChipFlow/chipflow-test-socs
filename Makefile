@@ -2,24 +2,31 @@
 init: 
 	pdm install
 
-.PHONY: upcounter # Build RTLIL for the design
-upcounter:
-	CHIPFLOW_ROOT=upcounter pdm run chipflow silicon prepare
-
-.PHONY: upcounter_clean # Clean/delete the builds
-upcounter_clean: 
-	rm -fr upcounter/build
-
-.PHONY: rom # Build RTLIL for the design
-rom:
-	CHIPFLOW_ROOT=rom pdm run chipflow silicon prepare
-
-.PHONY: rom_clean # Clean/delete the builds
-rom_clean: 
-	rm -fr rom/build
-
 .PHONY: clean # Clean/delete the builds
-clean: upcounter_clean fibonacci_clean rom_clean sram_clean
+
+define soc_target
+.PHONY: $(1) # Build RTLIL for the design
+$(1):
+	@CHIPFLOW_ROOT=$(strip $(1)) PYTHONPATH=$PYTHONPATH:${PWD} pdm run chipflow silicon prepare
+
+.PHONY: $(1)_submit # Submit RTLIL for build
+$(1)_submit: $(1)
+	@CHIPFLOW_ROOT=$(strip $(1)) PYTHONPATH=$PYTHONPATH:${PWD} pdm run chipflow silicon submit
+
+.PHONY: $(1)_clean # clean the design
+$(1)_clean:
+	rm -fr $(strip $(1))/build
+
+.PHONY: $(1)_lint
+$(1)_lint:
+	cd $(strip $(1))/design && pdm run lint
+
+clean: $(1)_clean
+endef
+
+$(eval $(call soc_target, upcounter))
+$(eval $(call soc_target, rom))
+$(eval $(call soc_target, sram))
 
 .PHONY: lint # Lint code
 lint: 
