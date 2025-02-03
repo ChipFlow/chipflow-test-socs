@@ -1,0 +1,13 @@
+[chipflow]
+project_id=177
+
+[chipflow.steps]
+silicon = "design.steps.silicon:MySiliconStep"
+
+[chipflow.silicon]
+process = "sky130"
+pad_ring = "caravel"
+
+[chipflow.silicon.pads]
+sys_clk   = { type = "clk", loc = "0" }
+sys_rstn  = { type = "i",   loc = "1" }
