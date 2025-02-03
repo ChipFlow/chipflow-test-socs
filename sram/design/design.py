@@ -47,7 +47,7 @@ class SRAM(wiring.Component):
             m.d.sync += self.mem.data_out.eq(sram_r.data)
 
         for i in range(self.data_width):
-            m.d.sync += self.mem.data_oe[i].eq(self.mem.wr_en)
+            m.d.comb += self.mem.data_oe[i].eq(self.mem.wr_en)
 
         return m
 
