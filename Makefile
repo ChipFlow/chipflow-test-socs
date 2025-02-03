@@ -10,14 +10,6 @@ upcounter:
 upcounter_clean: 
 	rm -fr upcounter/build
 
-.PHONY: fibonacci # Build RTLIL for the design
-fibonacci:
-	CHIPFLOW_ROOT=fibonacci pdm run chipflow silicon prepare
-
-.PHONY: fibonacci_clean # Clean/delete the builds
-fibonacci_clean: 
-	rm -fr fibonacci/build
-
 .PHONY: rom # Build RTLIL for the design
 rom:
 	CHIPFLOW_ROOT=rom pdm run chipflow silicon prepare
@@ -27,7 +19,7 @@ rom_clean:
 	rm -fr rom/build
 
 .PHONY: clean # Clean/delete the builds
-clean: upcounter_clean fibonacci_clean
+clean: upcounter_clean fibonacci_clean rom_clean sram_clean
 
 .PHONY: lint # Lint code
 lint: 
