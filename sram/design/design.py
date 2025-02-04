@@ -35,11 +35,13 @@ class SRAM(wiring.Component):
         m = Module()
 
         self._mem = Memory(width=self.data_width, depth=self.data_size)
-        m.submodules.sram_r = sram_r = self._mem.read_port()
         m.submodules.sram_w = sram_w = self._mem.write_port()
+        m.submodules.sram_r = sram_r = self._mem.read_port()
 
         m.d.comb += sram_r.addr.eq(self.mem.addr)
         m.d.comb += sram_w.addr.eq(self.mem.addr)
+        m.d.comb += sram_w.en.eq(self.mem.wr_en)
+        m.d.comb += sram_r.en.eq(~self.mem.wr_en)
 
         with m.If(self.mem.wr_en):
             m.d.sync += sram_w.data.eq(self.mem.data_in)
