@@ -18,7 +18,7 @@ class ROM(wiring.Component):
     design_name = "ROM"
 
     def __init__(self):
-        # define interfaces (for pads connections see test_socs_common/silicon.py)
+        # define interfaces (for pads connections see design/steps/silicon.py and test_socs_common/silicon.py)
         interfaces = {
             "mem": Out(ROMSignature),
         }
