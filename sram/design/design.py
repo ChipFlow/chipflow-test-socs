@@ -27,7 +27,7 @@ class SRAM(wiring.Component):
         }
         super().__init__(interfaces)
 
-        self.addr_width = self.mem.addr.width
+        self.addr_width = self.mem.addr.width - 1
         self.data_width = self.mem.data_out.width
         self.data_size = 2**self.addr_width
 

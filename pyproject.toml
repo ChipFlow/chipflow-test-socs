@@ -11,10 +11,10 @@ authors = [
 ]
 license = {file = "LICENSE.md"}
 
-requires-python = "!=3.10.1,!=3.10.2,<4.0,>3.10.0"
+requires-python = ">3.10.0"
 dependencies = [
-  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git",
-  "pyelftools~=0.29",
+  "amaranth[builtin-yosys]>=0.5.1",
+  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git@move-to-pinlock-api",
 ]
 
 # Build system configuration
