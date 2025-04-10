@@ -1,3 +1,5 @@
+name: CI
+
 on:
   push:
     branches:
@@ -5,31 +7,29 @@ on:
   pull_request:
   merge_group:
 
-name: CI
 jobs:
 
-  submit:
+  build-upcounter:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out source code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4
         with:
           python-version-file: pyproject.toml
           cache-dependency-path: pyproject.toml
           cache: true
-      - name: Relock PDM
-        run: pdm lock -d
 
       - name: Install dependencies
-        run: |
-          pdm install -d
+        run: pdm install -d
 
       - name: Build upcounter
         run: |
@@ -42,6 +42,28 @@ jobs:
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
+  build-rom:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+          cache-dependency-path: pyproject.toml
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install -d
+
       - name: Build rom
         run: |
           pdm run chipflow pin lock
@@ -53,6 +75,28 @@ jobs:
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
+  build-sram:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+          cache-dependency-path: pyproject.toml
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install -d
+
       - name: Build sram
         run: |
           pdm run chipflow pin lock
@@ -63,4 +107,3 @@ jobs:
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
-
