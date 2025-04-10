@@ -6,7 +6,10 @@ init:
 
 define soc_target
 .PHONY: $(1) # Build RTLIL for the design
-$(1):
+$(strip $(1))/pins.lock:
+	@CHIPFLOW_ROOT=$(strip $(1)) PYTHONPATH=$PYTHONPATH:${PWD} pdm run chipflow pin lock
+
+$(1): $(strip $(1))/pins.lock
 	@CHIPFLOW_ROOT=$(strip $(1)) PYTHONPATH=$PYTHONPATH:${PWD} pdm run chipflow silicon prepare
 
 .PHONY: $(1)_submit # Submit RTLIL for build

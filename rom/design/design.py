@@ -1,16 +1,16 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import In, Out, flipped, connect
+from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
 
-from math import ceil, log2
 import random
 
 
 __all__ = ["ROMSignature", "ROM"]
 
 ROMSignature = wiring.Signature({
-    "addr": In(12),
-    "data_out": Out(16),
+    "addr": Out(InputPinSignature(12)),
+    "data_out": Out(OutputPinSignature(16)),
 })
 
 
@@ -24,8 +24,8 @@ class ROM(wiring.Component):
         }
         super().__init__(interfaces)
 
-        self.addr_width = self.mem.addr.width
-        self.data_width = self.mem.data_out.width
+        self.addr_width = self.mem.addr.i.width
+        self.data_width = self.mem.data_out.o.width
         self.data_size = 2**self.addr_width
         self.data = random.randbytes(self.data_size)
 
@@ -36,8 +36,8 @@ class ROM(wiring.Component):
         m.submodules.rom = rom = self._mem.read_port()
 
         m.d.comb += [
-            rom.addr.eq(self.mem.addr),
-            self.mem.data_out.eq(rom.data)
+            rom.addr.eq(self.mem.addr.i),
+            self.mem.data_out.o.eq(rom.data)
         ]
 
         return m

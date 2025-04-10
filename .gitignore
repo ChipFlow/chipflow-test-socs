@@ -1,5 +1,5 @@
 # Python stuff
-__pycache__/
+__py*
 *.egg-info
 /dist
 
@@ -16,4 +16,12 @@ __pycache__/
 .doit.db*
 
 # Amaranth build
-/build
+rom/build
+sram/build
+upcounter/build
+
+rom/pins.lock
+sram/pins.lock
+upcounter/pins.lock
+
+pdm.lock

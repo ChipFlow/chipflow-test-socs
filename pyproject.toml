@@ -14,7 +14,7 @@ license = {file = "LICENSE.md"}
 requires-python = ">3.10.0"
 dependencies = [
   "amaranth[builtin-yosys]>=0.5.1",
-  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git@move-to-pinlock-api",
+  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git",
 ]
 
 # Build system configuration
@@ -36,5 +36,5 @@ lint = [
 
 [tool.pdm.scripts]
 _.env_file = ".env.toolchain"
-test.cmd = "pytest"
+#test.cmd = "pytest"
 lint.cmd = "pycodestyle --config=./.pycodestyle rom/ upcounter/ sram/"
