@@ -26,7 +26,7 @@ jobs:
           cache: true
       - name: Relock PDM
         run: pdm lock -d
-        
+
       - name: Install dependencies
         run: |
           pdm install -d
@@ -38,7 +38,7 @@ jobs:
           pdm run chipflow silicon submit
         env:
           CHIPFLOW_ROOT: "upcounter"
-          CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
@@ -49,7 +49,7 @@ jobs:
           pdm run chipflow silicon submit
         env:
           CHIPFLOW_ROOT: "rom"
-          CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
@@ -60,7 +60,7 @@ jobs:
           pdm run chipflow silicon submit
         env:
           CHIPFLOW_ROOT: "sram"
-          CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
