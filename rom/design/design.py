@@ -9,7 +9,7 @@ import random
 __all__ = ["ROMSignature", "ROM"]
 
 ROMSignature = wiring.Signature({
-    "addr": Out(InputPinSignature(12)),
+    "addr": Out(InputPinSignature(8)),
     "data_out": Out(OutputPinSignature(16)),
 })
 
