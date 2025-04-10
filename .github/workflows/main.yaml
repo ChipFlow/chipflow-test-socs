@@ -35,7 +35,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit
+          pdm run chipflow silicon submit --wait
         env:
           CHIPFLOW_ROOT: "upcounter"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
@@ -46,7 +46,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit
+          pdm run chipflow silicon submit --wait
         env:
           CHIPFLOW_ROOT: "rom"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
@@ -57,7 +57,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit
+          pdm run chipflow silicon submit --wait
         env:
           CHIPFLOW_ROOT: "sram"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
