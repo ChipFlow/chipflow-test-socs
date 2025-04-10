@@ -26,49 +26,41 @@ jobs:
           cache: true
       - name: Relock PDM
         run: pdm lock -d
+        
       - name: Install dependencies
         run: |
           pdm install -d
-      - name: Lock pins
-        run: pdm run chipflow pin lock
-      - name: Submit to cloud backend
-        run: pdm run chipflow silicon submit
+
+      - name: Build upcounter
+        run: |
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit
         env:
+          CHIPFLOW_ROOT: "upcounter"
           CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
           CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
-      - name: Relock PDM
+      - name: Build rom
         run: |
-          pdm lock -d
-      - name: Install dependencies
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit
+        env:
+          CHIPFLOW_ROOT: "rom"
+          CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
+          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+
+      - name: Build sram
         run: |
-          pdm install -d
-      - name: Cache YoWASP build products
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/YoWASP
-          key: YoWASP-${{ runner.os }}-${{ hashFiles('./.venv/**/*.wasm') }}
-          restore-keys: |
-            YoWASP-${{ runner.os }}-
-      - name: Lock pins
-        run: pdm run chipflow pin lock
-      - name: Run tests
-        run: |
-          make sim-check
-      - name: Test submit dry run
-        run: |
-          pdm run chipflow silicon submit --dry-run
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit
+        env:
+          CHIPFLOW_ROOT: "sram"
+          CHIPFLOW_API_ENDPOINT: 'https://build-staging.chipflow.org/build/submit'
+          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+
