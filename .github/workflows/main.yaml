@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+  merge_group:
+
+jobs:
+
+  build-upcounter:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+          cache-dependency-path: pyproject.toml
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install -d
+
+      - name: Build upcounter
+        run: |
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit --wait
+        env:
+          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_ROOT: "upcounter"
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+
+  build-rom:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+          cache-dependency-path: pyproject.toml
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install -d
+
+      - name: Build rom
+        run: |
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit --wait
+        env:
+          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_ROOT: "rom"
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+
+  build-sram:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+          cache-dependency-path: pyproject.toml
+          cache: true
+
+      - name: Install dependencies
+        run: pdm install -d
+
+      - name: Build sram
+        run: |
+          pdm run chipflow pin lock
+          pdm run chipflow silicon prepare
+          pdm run chipflow silicon submit --wait
+        env:
+          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_ROOT: "sram"
+          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
