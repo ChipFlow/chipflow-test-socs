@@ -38,3 +38,9 @@ lint = [
 _.env_file = ".env.toolchain"
 #test.cmd = "pytest"
 lint.cmd = "pycodestyle --config=./.pycodestyle rom/ upcounter/ sram/"
+test-sram.working_dir = "./sram"
+test-sram.composite = [ "chipflow pin lock", "chipflow silicon submit"]
+test-rom.working_dir = "./rom"
+test-rom.composite = [ "chipflow pin lock", "chipflow silicon submit"]
+test-upcounter.working_dir = "./upcounter"
+test-upcounter.composite = [ "chipflow pin lock", "chipflow silicon submit"]
