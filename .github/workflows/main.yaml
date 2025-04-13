@@ -37,7 +37,7 @@ jobs:
           pdm run chipflow silicon prepare
           pdm run chipflow silicon submit --wait
         env:
-          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_BACKEND_VERSION: "branch-main"
           CHIPFLOW_ROOT: "upcounter"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
@@ -71,7 +71,7 @@ jobs:
           pdm run chipflow silicon prepare
           pdm run chipflow silicon submit --wait
         env:
-          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_BACKEND_VERSION: "branch-main"
           CHIPFLOW_ROOT: "rom"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
@@ -105,7 +105,7 @@ jobs:
           pdm run chipflow silicon prepare
           pdm run chipflow silicon submit --wait
         env:
-          CHIPFLOW_BACKEND_VERSION: "branch-pnr-num-cores-use-8"
+          CHIPFLOW_BACKEND_VERSION: "branch-main"
           CHIPFLOW_ROOT: "sram"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
           CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
