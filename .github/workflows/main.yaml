@@ -40,8 +40,7 @@ jobs:
           CHIPFLOW_BACKEND_VERSION: "branch-upload-error-handling"
           CHIPFLOW_ROOT: "upcounter"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+          CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY_ID }}
 
   build-rom:
     runs-on: ubuntu-22.04
@@ -74,8 +73,8 @@ jobs:
           CHIPFLOW_BACKEND_VERSION: "branch-upload-error-handling"
           CHIPFLOW_ROOT: "rom"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+          CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY_ID }}
+
 
   build-sram:
     runs-on: ubuntu-22.04
@@ -108,5 +107,4 @@ jobs:
           CHIPFLOW_BACKEND_VERSION: "branch-upload-error-handling"
           CHIPFLOW_ROOT: "sram"
           CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+          CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY_ID }}
