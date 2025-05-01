@@ -1,7 +1,7 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import In, Out, flipped, connect
-from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
+from chipflow_lib.platforms import InputIOSignature, OutputIOSignature
 
 import random
 
@@ -9,8 +9,8 @@ import random
 __all__ = ["ROMSignature", "ROM"]
 
 ROMSignature = wiring.Signature({
-    "addr": Out(InputPinSignature(8)),
-    "data_out": Out(OutputPinSignature(16)),
+    "addr": Out(InputIOSignature(8)),
+    "data_out": Out(OutputIOSignature(16)),
 })
 
 
