@@ -5,9 +5,9 @@ name = "chipflow-test-socs"
 version = "0.0.0"
 description = "ChipFlow test designs"
 authors = [
-    {name = "Robert Taylor", email = "rob.taylor@chipflow.io>" },
-    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io>" },
-    {name = "Serge Rabyking", email = "serge.rabyking@chipflow.io>" },
+    {name = "Robert Taylor", email = "rob.taylor@chipflow.io" },
+    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io" },
+    {name = "Serge Rabyking", email = "serge.rabyking@chipflow.io" },
 ]
 license = {file = "LICENSE.md"}
 
