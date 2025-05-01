@@ -1,15 +1,15 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import In, Out, flipped, connect
-from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
+from chipflow_lib.platforms import InputIOSignature, OutputIOSignature
 
 __all__ = ["CounterSignature", "UpCounter"]
 
 CounterSignature = wiring.Signature({
-    "limit": Out(InputPinSignature(8)),
-    "en": Out(InputPinSignature(1)),
-    "ovf": Out(OutputPinSignature(1)),
-    "count": Out(OutputPinSignature(8))
+    "limit": Out(InputIOSignature(8)),
+    "en": Out(InputIOSignature(1)),
+    "ovf": Out(OutputIOSignature(1)),
+    "count": Out(OutputIOSignature(8))
 })
 
 
