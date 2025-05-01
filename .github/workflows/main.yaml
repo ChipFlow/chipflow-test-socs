@@ -1,21 +1,20 @@
-name: CI
-
 on:
   push:
     branches:
       - 'main'
   pull_request:
-  merge_group:
 
+name: CI
 jobs:
 
-  build-upcounter:
-    runs-on: ubuntu-22.04
+  submit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        design: ['upcounter', 'rom', 'sram']
     steps:
       - name: Check out source code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-python@v4
         with:
@@ -28,85 +27,31 @@ jobs:
           cache-dependency-path: pyproject.toml
           cache: true
 
-      - name: Install dependencies
-        run: pdm install -d
-
-      - name: Build upcounter
+      - name: Generate overrides to use current branch if PR
+        if: github.event_name == 'pull_request'
         run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
-        env:
-          CHIPFLOW_BACKEND_VERSION: "branch-main"
-          CHIPFLOW_ROOT: "upcounter"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+          pdm run tools/gen_overrides.py ${{github.head_ref}} > overrides.txt
+          echo "Generated overrides:"
+          cat overrides.txt
 
-  build-rom:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Check out source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Relock PDM
+        if: github.event_name != 'pull_request'
+        run: pdm lock -d
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
+      - name: Relock PDM (PR)
+        if: github.event_name == 'pull_request'
+        run: pdm lock -d --override overrides.txt
 
       - name: Install dependencies
-        run: pdm install -d
-
-      - name: Build rom
         run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          pdm install
+
+      - name: Lock pins
+        working-directory: ./${{ matrix.design }}
+        run: pdm run chipflow pin lock
+
+      - name: Submit to cloud backend
+        working-directory: ./${{ matrix.design }}
+        run: pdm run chipflow silicon submit --wait
         env:
-          CHIPFLOW_BACKEND_VERSION: "branch-main"
-          CHIPFLOW_ROOT: "rom"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
-
-  build-sram:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Check out source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
-
-      - name: Install dependencies
-        run: pdm install -d
-
-      - name: Build sram
-        run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
-        env:
-          CHIPFLOW_BACKEND_VERSION: "branch-main"
-          CHIPFLOW_ROOT: "sram"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
-          CHIPFLOW_API_KEY_ID: ${{ secrets.CHIPFLOW_API_KEY_ID }}
-          CHIPFLOW_API_KEY_SECRET: ${{ secrets.CHIPFLOW_API_KEY_SECRET }}
+          CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY}}
