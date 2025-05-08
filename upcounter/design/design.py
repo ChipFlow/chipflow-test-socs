@@ -1,16 +1,9 @@
 from amaranth import *
 from amaranth.lib import wiring
-from amaranth.lib.wiring import In, Out, flipped, connect
+from amaranth.lib.wiring import Out
 from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
 
-__all__ = ["CounterSignature", "UpCounter"]
-
-CounterSignature = wiring.Signature({
-    "limit": Out(InputPinSignature(8)),
-    "en": Out(InputPinSignature(1)),
-    "ovf": Out(OutputPinSignature(1)),
-    "count": Out(OutputPinSignature(8))
-})
+__all__ = ["UpCounter"]
 
 
 class UpCounter(wiring.Component):
