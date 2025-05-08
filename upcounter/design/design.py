@@ -16,25 +16,26 @@ CounterSignature = wiring.Signature({
 class UpCounter(wiring.Component):
     design_name = "upcounter"
 
-    def __init__(self):
-        # define interfaces (for pads connections see design/steps/silicon.py and test_socs_common/silicon.py)
-        interfaces = {
-            "pins": Out(CounterSignature),
-        }
-        super().__init__(interfaces)
+    limit: Out(InputPinSignature(8))
+    en: Out(InputPinSignature(1))
+    ovf: Out(OutputPinSignature(1))
+    count: Out(OutputPinSignature(8))
 
     def elaborate(self, platform):
         m = Module()
 
-        pins = self.pins
+        limit = self.limit
+        en = self.en
+        ovf = self.ovf
+        count = self.count
 
-        m.d.comb += pins.ovf.o.eq(pins.count.o == pins.limit.i)
+        m.d.comb += ovf.o.eq(count.o == limit.i)
 
-        with m.If(pins.en.i):
-            with m.If(pins.ovf.o):
-                m.d.sync += pins.count.o.eq(0)
+        with m.If(en.i):
+            with m.If(ovf.o):
+                m.d.sync += count.o.eq(0)
             with m.Else():
-                m.d.sync += pins.count.o.eq(pins.count.o + 1)
+                m.d.sync += count.o.eq(count.o + 1)
 
         return m
 
