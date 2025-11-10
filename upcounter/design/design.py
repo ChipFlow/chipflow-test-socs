@@ -1,7 +1,7 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import Out
-from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
+from chipflow_lib.platforms import InputIOSignature, OutputIOSignature
 
 __all__ = ["UpCounter"]
 
@@ -9,10 +9,10 @@ __all__ = ["UpCounter"]
 class UpCounter(wiring.Component):
     design_name = "upcounter"
 
-    limit: Out(InputPinSignature(8))
-    en: Out(InputPinSignature(1))
-    ovf: Out(OutputPinSignature(1))
-    count: Out(OutputPinSignature(8))
+    limit: Out(InputIOSignature(8))
+    en: Out(InputIOSignature(1))
+    ovf: Out(OutputIOSignature(1))
+    count: Out(OutputIOSignature(8))
 
     def elaborate(self, platform):
         m = Module()
