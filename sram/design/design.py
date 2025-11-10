@@ -1,17 +1,16 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import In, Out, flipped, connect
-from chipflow_lib.platforms import InputPinSignature, OutputPinSignature
+from chipflow_lib.platforms import InputIOSignature, OutputIOSignature
 
 
 __all__ = ["SRAMSignature", "SRAM"]
 
 SRAMSignature = wiring.Signature({
-    "addr": Out(InputPinSignature(12)),
-    "data_out": Out(OutputPinSignature(16)),
-    "data_oe": Out(OutputPinSignature(16)),
-    "data_in": Out(InputPinSignature(16)),
-    "wr_en": Out(InputPinSignature(1))
+    "addr": Out(InputIOSignature(12)),
+    "data_out": Out(OutputIOSignature(8)),
+    "data_in": Out(InputIOSignature(8)),
+    "wr_en": Out(InputIOSignature(1))
 })
 
 
@@ -45,9 +44,6 @@ class SRAM(wiring.Component):
             m.d.sync += sram_w.data.eq(self.mem.data_in.i)
         with m.Else():
             m.d.sync += self.mem.data_out.o.eq(sram_r.data)
-
-        for i in range(self.data_width):
-            m.d.comb += self.mem.data_oe.o[i].eq(self.mem.wr_en.i)
 
         return m
 
