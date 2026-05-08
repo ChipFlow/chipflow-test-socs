@@ -17,11 +17,11 @@ dependencies = [
   "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git@v0.4.0",
 ]
 
+[tool.uv]
+package = false
+
 [tool.uv.sources]
 chipflow-lib = { path = "../chipflow-lib", editable = true }
-
-[tool.pdm]
-distribution = false
 
 # Development workflow configuration
 

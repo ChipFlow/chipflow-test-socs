@@ -26,25 +26,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
+          enable-cache: true
 
       - name: Install dependencies
-        run: pdm install --prod
+        run: uv sync --no-sources --no-dev
 
       - name: Build upcounter
         run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          uv run chipflow pin lock
+          uv run chipflow silicon prepare
+          uv run chipflow silicon submit --wait
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "upcounter"
@@ -59,25 +53,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
+          enable-cache: true
 
       - name: Install dependencies
-        run: pdm install --prod
+        run: uv sync --no-sources --no-dev
 
       - name: Build rom
         run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          uv run chipflow pin lock
+          uv run chipflow silicon prepare
+          uv run chipflow silicon submit --wait
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "rom"
@@ -92,25 +80,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: '3.10'
-
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v4
-        with:
-          python-version-file: pyproject.toml
-          cache-dependency-path: pyproject.toml
-          cache: true
+          enable-cache: true
 
       - name: Install dependencies
-        run: pdm install --prod
+        run: uv sync --no-sources --no-dev
 
       - name: Build sram
         run: |
-          pdm run chipflow pin lock
-          pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          uv run chipflow pin lock
+          uv run chipflow silicon prepare
+          uv run chipflow silicon submit --wait
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "sram"
