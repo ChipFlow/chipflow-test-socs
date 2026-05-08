@@ -20,6 +20,9 @@ dependencies = [
 [tool.uv.sources]
 chipflow-lib = { path = "../chipflow-lib", editable = true }
 
+[tool.pdm]
+distribution = false
+
 # Development workflow configuration
 
 [dependency-groups]
