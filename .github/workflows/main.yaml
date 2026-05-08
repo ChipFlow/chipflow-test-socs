@@ -16,6 +16,12 @@ on:
   repository_dispatch:
     types: [run-tests]
 
+env:
+  # Ignore [tool.uv.sources] (which redirects chipflow-lib to a sibling
+  # checkout for local dev). On the runner there's no sibling repo, so
+  # uv must resolve chipflow-lib from the git URL pinned in pyproject.
+  UV_NO_SOURCES: "1"
+
 jobs:
 
   build-upcounter:
@@ -32,7 +38,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-sources --no-dev
+        run: uv sync --no-dev
 
       - name: Build upcounter
         run: |
@@ -59,7 +65,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-sources --no-dev
+        run: uv sync --no-dev
 
       - name: Build rom
         run: |
@@ -86,7 +92,7 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --no-sources --no-dev
+        run: uv sync --no-dev
 
       - name: Build sram
         run: |
