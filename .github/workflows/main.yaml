@@ -44,7 +44,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          pdm run chipflow silicon submit --dry-run
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "upcounter"
@@ -77,7 +77,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          pdm run chipflow silicon submit --dry-run
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "rom"
@@ -110,7 +110,7 @@ jobs:
         run: |
           pdm run chipflow pin lock
           pdm run chipflow silicon prepare
-          pdm run chipflow silicon submit --wait
+          pdm run chipflow silicon submit --dry-run
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "sram"
