@@ -48,7 +48,7 @@ jobs:
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "upcounter"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_ORIGIN: 'https://build.chipflow.com'
           CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY }}
 
   build-rom:
@@ -81,7 +81,7 @@ jobs:
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "rom"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_ORIGIN: 'https://build.chipflow.com'
           CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY }}
 
   build-sram:
@@ -114,5 +114,5 @@ jobs:
         env:
           CHIPFLOW_BACKEND_VERSION: ${{ inputs.backend_version || github.event.client_payload.backend_version || 'branch-main' }}
           CHIPFLOW_ROOT: "sram"
-          CHIPFLOW_API_ORIGIN: 'https://build-staging.chipflow.org'
+          CHIPFLOW_API_ORIGIN: 'https://build.chipflow.com'
           CHIPFLOW_API_KEY: ${{ secrets.CHIPFLOW_API_KEY }}
